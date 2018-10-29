@@ -1,0 +1,122 @@
+
+import java.awt.Frame;
+
+
+import java.awt.Button;
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.Label;
+import java.awt.Menu;
+import java.awt.MenuBar;
+import java.awt.MenuItem;
+import java.awt.TextArea;
+import java.awt.TextField;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
+
+
+
+
+public class app19_6 extends Frame implements ActionListener
+{
+    static app19_6 frm=new app19_6();
+	static Label lab = new Label("猜數字遊戲!");
+	static Menu menu1 =new Menu("Style");
+	static Menu menu2=new Menu("Exit");
+	static MenuItem mi1=new MenuItem("猜數字");
+	static MenuItem mi2=new MenuItem("Close window");
+	static MenuBar mb=new MenuBar();
+	static TextArea txa1;
+	static TextField txf=new TextField(18);
+	static TextArea txa=new TextArea("",4,19,TextArea.SCROLLBARS_NONE);
+	static Button btn = new Button("開始");
+	static Button btn1 = new Button("答案");
+	static Button btn2 = new Button("重新");
+	static final int maxInt = 99;
+	static int a = 0;
+	static int number;
+
+	public static void main(String args[]) 
+	
+	{
+		
+		frm.setSize(420, 250);                  //設定視窗像素
+		frm.setBackground(Color.yellow);        //設定背景
+		frm.setLocation(450, 450);              //設定視窗位置
+		frm.add(lab);       
+		frm.setMenuBar(mb);//將物件lab加入視窗中
+		frm.setVisible(true); 
+		//mb.add(menu1);
+		mb.add(menu2);
+		//menu1.add(mi1);
+		menu2.add(mi2);
+		//mi1.addActionListener(frm);
+		mi2.addActionListener(frm);
+		txa1=new TextArea("",6,10,TextArea.SCROLLBARS_NONE);
+		frm.add(txf);
+		txa.setEditable(false);
+		frm.add(txa);
+		lab.setText("猜數字遊戲");             //在標籤上加入文字
+		lab.setBackground(Color.red);           //設定標籤背景顏色
+		lab.setAlignment(Label.CENTER);         //設定標籤位置
+		lab.setForeground(Color.yellow);        //設定文字顏色
+		Font fnt=new Font("Serief",Font.ITALIC+Font.BOLD,22);
+		lab.setFont(fnt);                       //文字自型
+		frm.add(btn);       
+		frm.add(btn1);
+		frm.add(btn2);
+		frm.setLayout(new FlowLayout());        //自動排列按鈕
+		a = (int)(Math.random()*99)+1;
+btn.addActionListener(new ActionListener() {
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		int input_anw = number;
+		try {
+            input_anw = Integer.parseInt(txf.getText());
+        } catch (Exception ex) {
+            return;      }
+		
+		if (input_anw < a)
+            txa.append(input_anw +"比答案小!\n");
+       else if (input_anw > a)
+            txa.append(input_anw +"比答案大!\n");
+       else
+           txa.append(input_anw +"你答對了!\n");
+}
+	}
+);
+btn1.addActionListener(new ActionListener() {
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        txa.append("答案是:"+ a + "\n");
+        txf.setText("");
+        txf.requestFocus();
+
+    }
+});
+btn2.addActionListener(new ActionListener() {
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        txf.setText("");
+        txa.setText("");
+        java.util.Random r = new java.util.Random();
+        a = r.nextInt(maxInt) + 1;
+        txf.requestFocus();
+    }
+});
+	
+}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		 MenuItem mi=(MenuItem) e.getSource();
+		if(mi==mi2)                 
+	         frm.dispose();
+	}
+
+}
