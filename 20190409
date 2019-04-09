@@ -1,0 +1,60 @@
+package ProcessFilesInOneDir.src;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.HashMap;
+
+public class ProcessFilesInOneDir {
+
+	public static void main(String[] args) throws IOException {
+		// TODO Auto-generated method stub
+		
+		String InputDir = "E:\\123";
+		 FileWriter fw=new FileWriter("E:\\106021386_lung cencer.txt");
+	     BufferedWriter bfw=new BufferedWriter(fw);
+	
+		
+		File folder = new File(InputDir);
+		HashMap WordCnt = new HashMap <String, Integer>();
+		
+		for (final File fileEntry : folder.listFiles()) {
+			
+		        if (fileEntry.isDirectory()) {
+		            //listFilesForFolder(fileEntry);
+		        } else {
+		            //System.out.println(fileEntry.getName());
+		            String OneFilename =InputDir+"\\"+fileEntry.getName();
+		            
+		            FileReader fr =new FileReader(OneFilename);
+		            BufferedReader bfr =new BufferedReader(fr);
+		            String str;
+		            int count =0;
+		            int c1=0;
+		            while((str=bfr.readLine())!=null) {
+		            	count++;
+		            	str.toLowerCase();
+		            	String[] Items = new String(str).trim().split("##");
+		            	if(str.toLowerCase().contains("lung cancer")) {
+		            		c1++;
+		            	}
+		  
+		            }
+		            System.out.println(OneFilename+"=>"+count+"line");
+		            System.out.println(OneFilename+"=>"+c1);
+		            fr.close();
+		          for (Object key : WordCnt.keySet()) {
+		                System.out.println(key + " : " + WordCnt.get(str));
+		                bfw.write(key + "\t" + WordCnt.get(str));  // 寫入亂數到緩衝區
+		             	bfw.newLine();
+		        }  
+		}
+		
+		           }
+		           bfw.flush();      // 將緩衝區內的資料寫到檔案裡
+		           fw.close(); // End of for (final File fileEntry : folder.listFiles())
+	} // End of public static void main(String[] args) throws IOException {	
+}
